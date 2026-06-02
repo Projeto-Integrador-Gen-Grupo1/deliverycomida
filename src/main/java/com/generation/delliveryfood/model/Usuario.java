@@ -1,19 +1,13 @@
-package com.projetointegrador.delivery.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+package com.generation.delliveryfood.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -23,26 +17,22 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome e obrigatorio")
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "O nome é obrigatório")
     private String nome;
 
-    @NotBlank(message = "O CPF e obrigatorio")
-    @Column(nullable = false, unique = true, length = 14)
+    @NotBlank(message = "O CPF é obrigatório")
     private String cpf;
 
-    @NotBlank(message = "O e-mail e obrigatorio")
-    @Email(message = "Informe um e-mail valido")
-    @Column(nullable = false, unique = true, length = 120)
+    @NotBlank(message = "O usuário é obrigatório")
     private String usuario;
 
-
-    @NotBlank(message = "A senha e obrigatoria")
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "A senha é obrigatória")
     private String senha;
 
+    private String foto;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("usuario")
+    @JsonIgnore
     private List<Produto> produtos = new ArrayList<>();
 
     public Long getId() {
@@ -75,7 +65,6 @@ public class Usuario {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-   
     }
 
     public String getSenha() {
@@ -84,6 +73,14 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public List<Produto> getProdutos() {

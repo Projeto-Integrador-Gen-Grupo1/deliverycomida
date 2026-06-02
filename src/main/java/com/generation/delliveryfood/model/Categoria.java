@@ -1,18 +1,14 @@
-package com.projetointegrador.delivery.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+package com.generation.delliveryfood.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_categorias")
@@ -22,12 +18,12 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "A descricao e obrigatoria")
-    @Column(nullable = false, length = 80)
+    @NotBlank(message = "A descrição é obrigatória")
+    @Size(min = 3, max = 80)
     private String descricao;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("categoria")
+    @JsonIgnore
     private List<Produto> produtos = new ArrayList<>();
 
     public Long getId() {
